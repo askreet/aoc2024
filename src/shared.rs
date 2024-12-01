@@ -37,6 +37,14 @@ impl From<ParseIntError> for Error {
     }
 }
 
+impl From<std::io::Error> for Error {
+    fn from(value: std::io::Error) -> Self {
+        return Error {
+            msg: format!("i/o error: {}", value.to_string()),
+        };
+    }
+}
+
 pub trait Solution {
     fn part1(&self) -> Result<String>;
     fn part2(&self) -> Result<String>;
