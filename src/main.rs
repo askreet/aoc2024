@@ -1,9 +1,10 @@
 mod shared;
 
-use std::collections::HashMap;
 use shared::*;
+use std::collections::HashMap;
 
 mod day1;
+mod day2;
 
 fn main() -> Result<()> {
     let args: Vec<_> = std::env::args().collect();
@@ -16,6 +17,7 @@ fn main() -> Result<()> {
 
     let mut days: HashMap<u32, Box<dyn Solution>> = HashMap::new();
     days.insert(1, Box::new(day1::Day1 {}));
+    days.insert(2, Box::new(day2::Day2 {}));
 
     if let Some(solution) = days.get(&day) {
         let result = if part == 1 {
@@ -23,7 +25,7 @@ fn main() -> Result<()> {
         } else if part == 2 {
             solution.part2()
         } else {
-            return Err(Error::new("invalid part number"))
+            return Err(Error::new("invalid part number"));
         };
 
         match result {
@@ -31,7 +33,7 @@ fn main() -> Result<()> {
             Err(e) => println!("error: {}", e),
         }
     } else {
-        return Err(Error::new(&format!("day {day} not found")))
+        return Err(Error::new(&format!("day {day} not found")));
     }
 
     Ok(())
