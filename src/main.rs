@@ -5,6 +5,7 @@ use std::collections::HashMap;
 
 mod day1;
 mod day2;
+mod day3;
 
 fn main() -> Result<()> {
     let args: Vec<_> = std::env::args().collect();
@@ -18,6 +19,7 @@ fn main() -> Result<()> {
     let mut days: HashMap<u32, Box<dyn Solution>> = HashMap::new();
     days.insert(1, Box::new(day1::Day1 {}));
     days.insert(2, Box::new(day2::Day2 {}));
+    days.insert(3, Box::new(day3::Day3 {}));
 
     if let Some(solution) = days.get(&day) {
         let result = if part == 1 {
