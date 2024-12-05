@@ -1,3 +1,6 @@
+mod char_grid;
+pub use char_grid::*;
+
 use std::fmt::Formatter;
 use std::num::ParseIntError;
 
@@ -48,4 +51,18 @@ impl From<std::io::Error> for Error {
 pub trait Solution {
     fn part1(&self) -> Result<String>;
     fn part2(&self) -> Result<String>;
+}
+
+pub struct Direction(i8, i8);
+pub const LEFT: Direction = Direction(-1, 0);
+pub const RIGHT: Direction = Direction(1, 0);
+pub const UP: Direction = Direction(0, -1);
+pub const DOWN: Direction = Direction(0, 1);
+
+impl std::ops::Add for Direction {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self(rhs.0 + self.0, rhs.1 + self.1)
+    }
 }
