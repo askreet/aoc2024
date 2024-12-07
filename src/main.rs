@@ -7,6 +7,7 @@ mod day1;
 mod day2;
 mod day3;
 mod day4;
+mod day5;
 
 fn main() -> Result<()> {
     let args: Vec<_> = std::env::args().collect();
@@ -22,6 +23,7 @@ fn main() -> Result<()> {
     days.insert(2, Box::new(day2::Day2 {}));
     days.insert(3, Box::new(day3::Day3 {}));
     days.insert(4, Box::new(day4::Day4 {}));
+    days.insert(5, Box::new(day5::Day5 {}));
 
     if let Some(solution) = days.get(&day) {
         let result = if part == 1 {
