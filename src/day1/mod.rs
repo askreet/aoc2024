@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-pub struct Day1 {}
+pub struct Day1;
 
 impl Solution for Day1 {
     fn part1(&self) -> Result<String> {

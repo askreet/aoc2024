@@ -9,6 +9,7 @@ mod day3;
 mod day4;
 mod day5;
 mod day6;
+mod day7;
 
 fn main() -> Result<()> {
     let args: Vec<_> = std::env::args().collect();
@@ -20,12 +21,13 @@ fn main() -> Result<()> {
     let part = args[2].parse::<u32>()?;
 
     let mut days: HashMap<u32, Box<dyn Solution>> = HashMap::new();
-    days.insert(1, Box::new(day1::Day1 {}));
-    days.insert(2, Box::new(day2::Day2 {}));
-    days.insert(3, Box::new(day3::Day3 {}));
-    days.insert(4, Box::new(day4::Day4 {}));
-    days.insert(5, Box::new(day5::Day5 {}));
-    days.insert(6, Box::new(day6::Day6 {}));
+    days.insert(1, Box::new(day1::Day1));
+    days.insert(2, Box::new(day2::Day2));
+    days.insert(3, Box::new(day3::Day3));
+    days.insert(4, Box::new(day4::Day4));
+    days.insert(5, Box::new(day5::Day5));
+    days.insert(6, Box::new(day6::Day6));
+    days.insert(7, Box::new(day7::Day7));
 
     if let Some(solution) = days.get(&day) {
         let result = if part == 1 {

@@ -1,7 +1,7 @@
 use crate::shared::*;
 use std::fs::read_to_string;
 
-pub struct Day3 {}
+pub struct Day3;
 
 impl Solution for Day3 {
     fn part1(&self) -> Result<String> {

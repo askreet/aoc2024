@@ -1,6 +1,6 @@
 use crate::shared::*;
 
-pub struct Day4 {}
+pub struct Day4;
 
 impl Solution for Day4 {
     fn part1(&self) -> Result<String> {

@@ -2,7 +2,7 @@ use crate::shared::*;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-pub struct Day2 {}
+pub struct Day2;
 
 impl Solution for Day2 {
     fn part1(&self) -> Result<String> {
