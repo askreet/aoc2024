@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::num::ParseIntError;
 
-pub struct Day5 {}
+pub struct Day5;
 
 impl Solution for Day5 {
     fn part1(&self) -> Result<String> {

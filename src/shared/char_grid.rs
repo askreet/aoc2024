@@ -2,7 +2,7 @@ use crate::shared::*;
 use std::fs::read_to_string;
 
 // A 2d grid of chars which can be loaded from a text file.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct CharGrid {
     width: i32,
     chars: Vec<char>,
@@ -17,6 +17,7 @@ impl CharGrid {
 
         CharGrid { width, chars }
     }
+
     pub fn from_file(path: &str) -> Result<CharGrid> {
         let contents = read_to_string(path)?;
 
@@ -67,6 +68,35 @@ impl CharGrid {
         self.chars[((y * self.width) + x) as usize]
     }
 
+    pub fn find_one(&self, c: char) -> Result<(i32, i32)> {
+        let item = self.chars.iter().enumerate().find(|(idx, e)| **e == c);
+
+        match item {
+            Some((idx, _)) => Ok((idx as i32 % self.width, idx as i32 / self.width)),
+            None => Err(Error::new(&format!("char '{}' not found in CharGrid", c))),
+        }
+    }
+
+    pub fn find_all_pos(&self, c: char) -> Vec<Position> {
+        self.chars
+            .iter()
+            .enumerate()
+            .filter(|(idx, e)| **e == c)
+            .map(|(idx, _)| Position {
+                x: idx as i32 % self.width,
+                y: idx as i32 / self.width,
+            })
+            .collect()
+    }
+
+    pub fn in_bounds(&self, p: Position) -> bool {
+        p.x >= 0 && p.y >= 0 && p.x <= self.x_max() && p.y <= self.y_max()
+    }
+
+    pub fn count(&self, c: char) -> usize {
+        self.chars.iter().filter(|v| **v == c).count()
+    }
+
     pub fn line_direction(&self, mut x: i32, mut y: i32, dir: Direction) -> Vec<char> {
         debug_assert!(x >= 0 && x <= self.x_max());
         debug_assert!(y >= 0 && y <= self.y_max());
@@ -93,6 +123,20 @@ impl CharGrid {
             width,
             height,
         }
+    }
+
+    pub fn draw(&self) -> String {
+        let mut str = String::new();
+
+        for y in 0..self.height() {
+            for x in 0..self.width {
+                str.push(self.at(x, y))
+            }
+            str.push('\n')
+        }
+        str.push('\n');
+
+        str
     }
 }
 
@@ -124,6 +168,16 @@ fn test_windows() {
     assert_eq!(9, views.len());
     assert_eq!(views[0].chars(), vec!['A', 'A', 'B', 'B']);
     assert_eq!(views[8].chars(), vec!['C', 'C', 'D', 'D']);
+}
+
+#[test]
+fn test_find_one() {
+    let cg = CharGrid::from_str("AAA\nBBB\nXYZ").unwrap();
+
+    assert_eq!(Ok((0, 0)), cg.find_one('A'));
+    assert_eq!(Ok((0, 1)), cg.find_one('B'));
+    assert_eq!(Ok((2, 2)), cg.find_one('Z'));
+    assert!(cg.find_one('^').is_err());
 }
 
 // Windows is an iterator over a CharGrid that yields every permutation of the given size as a
