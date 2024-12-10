@@ -1,4 +1,5 @@
 use crate::shared::*;
+use std::collections::HashSet;
 use std::fs::read_to_string;
 
 // A 2d grid of chars which can be loaded from a text file.
@@ -64,6 +65,14 @@ impl CharGrid {
         self.chars[((y * self.width) + x) as usize] = c
     }
 
+    pub fn set_pos(&mut self, pos: Position, c: char) {
+        debug_assert!(
+            self.in_bounds(pos),
+            "set_pos called with out of bounds position"
+        );
+        self.set(pos.x, pos.y, c)
+    }
+
     pub fn at(&self, x: i32, y: i32) -> char {
         self.chars[((y * self.width) + x) as usize]
     }
@@ -95,6 +104,16 @@ impl CharGrid {
 
     pub fn count(&self, c: char) -> usize {
         self.chars.iter().filter(|v| **v == c).count()
+    }
+
+    pub fn uniq_chars(&self) -> Vec<char> {
+        let mut chars = HashSet::new();
+
+        for c in &self.chars {
+            chars.insert(*c);
+        }
+
+        chars.into_iter().collect()
     }
 
     pub fn line_direction(&self, mut x: i32, mut y: i32, dir: Direction) -> Vec<char> {

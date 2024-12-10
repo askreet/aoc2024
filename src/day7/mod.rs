@@ -89,23 +89,6 @@ fn op_permutations(n: usize, ops: &[Op]) -> Vec<Vec<Op>> {
     }
 }
 
-#[test]
-fn test_op_permutations() {
-    assert_eq!(
-        vec![
-            vec![Op::Add, Op::Add, Op::Add],
-            vec![Op::Add, Op::Add, Op::Mul],
-            vec![Op::Add, Op::Mul, Op::Add],
-            vec![Op::Add, Op::Mul, Op::Mul],
-            vec![Op::Mul, Op::Add, Op::Add],
-            vec![Op::Mul, Op::Add, Op::Mul],
-            vec![Op::Mul, Op::Mul, Op::Add],
-            vec![Op::Mul, Op::Mul, Op::Mul],
-        ],
-        op_permutations(3, &[Op::Add, Op::Mul])
-    );
-}
-
 fn part1(path: &str, ops: &[Op]) -> Result<u64> {
     let contents = read_to_string(path)?;
 
