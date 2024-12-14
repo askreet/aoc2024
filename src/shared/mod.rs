@@ -3,6 +3,7 @@ pub use char_grid::*;
 
 use std::fmt::Formatter;
 use std::num::ParseIntError;
+use std::ops::Add;
 
 pub type Result<T> = std::result::Result<T, Error>;
 
@@ -83,7 +84,7 @@ impl Direction {
     }
 }
 
-impl std::ops::Add for Direction {
+impl Add for Direction {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
@@ -91,7 +92,18 @@ impl std::ops::Add for Direction {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+impl Add<Direction> for Position {
+    type Output = Self;
+
+    fn add(self, rhs: Direction) -> Self::Output {
+        Self::Output {
+            x: self.x + rhs.0 as i32,
+            y: self.y + rhs.1 as i32,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq)]
 pub struct Position {
     pub x: i32,
     pub y: i32,
