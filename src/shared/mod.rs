@@ -219,3 +219,28 @@ fn test_combinations() {
         combinations(4, &[1, 2, 3, 4, 5])
     );
 }
+
+#[rustfmt::skip]
+pub fn digits(n: usize) -> usize {
+                                  if
+                                n < 10                     { 1  }
+    else if                    n  < 100                    { 2  }
+    else if                   n   < 1000                   { 3  }
+    else if                  n    < 10000                  { 4  }
+    else if                 n     < 100000                 { 5  }
+    else if                n      < 1000000                { 6  }
+    else if               n       < 10000000               { 7  }
+    else if              n        < 100000000              { 8  }
+    else if             n         < 1000000000             { 9  }
+    else if            n          < 10000000000            { 10 }
+    else if           n           < 100000000000           { 11 }
+    else if          n            < 1000000000000          { 12 }
+    else if         n             < 10000000000000         { 13 }
+    else if        n              < 100000000000000        { 14 }
+    else if       n               < 1000000000000000       { 15 }
+    else if      n                < 10000000000000000      { 16 }
+    else if     n                 < 100000000000000000     { 17 }
+    else if    n                  < 1000000000000000000    { 18 }
+    else if   n                   < 10000000000000000000   { 19 }
+    else                        { 20 }
+}

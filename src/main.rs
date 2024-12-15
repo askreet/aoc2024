@@ -5,6 +5,7 @@ use std::collections::HashMap;
 
 mod day1;
 mod day10;
+mod day11;
 mod day2;
 mod day3;
 mod day4;
@@ -34,6 +35,7 @@ fn main() -> Result<()> {
     days.insert(8, Box::new(day8::Day8));
     days.insert(9, Box::new(day9::Day9));
     days.insert(10, Box::new(day10::Day10));
+    days.insert(11, Box::new(day11::Day11));
 
     if let Some(solution) = days.get(&day) {
         let result = if part == 1 {
