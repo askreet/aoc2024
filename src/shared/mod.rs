@@ -55,7 +55,7 @@ pub trait Solution {
     fn part2(&self) -> Result<String>;
 }
 
-#[derive(Clone, Copy)]
+#[derive(Debug, Clone, Copy)]
 pub struct Direction(i8, i8);
 pub const LEFT: Direction = Direction(-1, 0);
 pub const RIGHT: Direction = Direction(1, 0);
@@ -100,6 +100,13 @@ impl Add<Direction> for Position {
             x: self.x + rhs.0 as i32,
             y: self.y + rhs.1 as i32,
         }
+    }
+}
+
+impl Add<Direction> for &Position {
+    type Output = Position;
+    fn add(self, rhs: Direction) -> Self::Output {
+        *self + rhs
     }
 }
 
