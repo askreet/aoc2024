@@ -251,3 +251,23 @@ pub fn digits(n: usize) -> usize {
     else if   n                   < 10000000000000000000   { 19 }
     else                        { 20 }
 }
+
+pub fn split_docs(s: String) -> Vec<String> {
+    let mut buf = String::new();
+    let mut docs = Vec::new();
+
+    for line in s.lines() {
+        if line != "" {
+            buf.push_str(line);
+            buf.push('\n');
+        } else {
+            docs.push(buf.clone());
+            buf.clear();
+        }
+    }
+    if buf != "" {
+        docs.push(buf);
+    }
+
+    docs
+}
