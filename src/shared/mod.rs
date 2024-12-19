@@ -50,6 +50,14 @@ impl From<std::io::Error> for Error {
     }
 }
 
+impl From<regex::Error> for Error {
+    fn from(value: regex::Error) -> Self {
+        Error {
+            msg: format!("regex error: {}", value.to_string()),
+        }
+    }
+}
+
 pub trait Solution {
     fn part1(&self) -> Result<String>;
     fn part2(&self) -> Result<String>;
@@ -57,12 +65,17 @@ pub trait Solution {
 
 #[derive(Debug, Clone, Copy)]
 pub struct Direction(i8, i8);
+
 pub const LEFT: Direction = Direction(-1, 0);
 pub const RIGHT: Direction = Direction(1, 0);
 pub const UP: Direction = Direction(0, -1);
 pub const DOWN: Direction = Direction(0, 1);
 
 impl Direction {
+    pub fn of(x: i8, y: i8) -> Direction {
+        Direction(x, y)
+    }
+
     pub fn clockwise(&self) -> Direction {
         match self {
             Direction(0, -1) => RIGHT,
@@ -111,12 +124,28 @@ impl Add<Direction> for &Position {
 }
 
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq)]
+pub struct Dimensions {
+    pub w: i32,
+    pub h: i32,
+}
+
+impl Dimensions {
+    pub fn of(w: i32, h: i32) -> Dimensions {
+        Dimensions { w, h }
+    }
+}
+
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq)]
 pub struct Position {
     pub x: i32,
     pub y: i32,
 }
 
 impl Position {
+    pub fn at(x: i32, y: i32) -> Position {
+        Position { x, y }
+    }
+
     pub fn add(&mut self, dir: Direction) -> Position {
         Position {
             x: self.x + dir.0 as i32,
@@ -143,6 +172,62 @@ impl Position {
             y: self.y - other.y,
         }
     }
+
+    pub fn wrapping_add_direction(
+        &self,
+        rhs: Direction,
+        bounds: (Position, Dimensions),
+    ) -> Position {
+        let mut pos = self + rhs;
+
+        while pos.x < bounds.0.x {
+            pos.x += bounds.1.w;
+        }
+        while pos.y < bounds.0.y {
+            pos.y += bounds.1.h;
+        }
+
+        while pos.x >= bounds.0.x + bounds.1.w {
+            pos.x -= bounds.1.w;
+        }
+        while pos.y >= bounds.0.y + bounds.1.h {
+            pos.y -= bounds.1.h;
+        }
+
+        pos
+    }
+}
+
+impl std::fmt::Display for Position {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
+    }
+}
+
+#[test]
+fn test_wrapping_add_direction() {
+    let bounds = (Position::at(0, 0), Dimensions::of(10, 10));
+
+    let mut pos = Position::at(0, 0);
+    pos = pos.wrapping_add_direction(Direction::of(-1, -1), bounds);
+
+    assert_eq!(Position::at(9, 9), pos);
+
+    let mut pos = Position::at(5, 5);
+    pos = pos.wrapping_add_direction(Direction::of(-100, 100), bounds);
+
+    assert_eq!(Position::at(5, 5), pos);
+
+    let bounds = (Position::at(0, 0), Dimensions::of(11, 7));
+    let mut pos = Position::at(10, 3);
+    pos = pos.wrapping_add_direction(Direction::of(1, 2), bounds);
+    assert_eq!(Position::at(0, 5), pos);
+
+    pos = pos.wrapping_add_direction(Direction::of(1, 2), bounds);
+    assert_eq!(Position::at(1, 0), pos);
+
+    pos = pos.wrapping_add_direction(Direction::of(1, 2), bounds);
+    assert_eq!(Position::at(2, 2), pos);
 }
 
 pub fn permutations<T: Clone>(n: usize, items: &[T]) -> Vec<Vec<T>> {
