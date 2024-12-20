@@ -77,6 +77,10 @@ impl CharGrid {
         self.chars[((y * self.width) + x) as usize]
     }
 
+    pub fn at_pos(&self, pos: Position) -> char {
+        self.at(pos.x, pos.y)
+    }
+
     pub fn find_one(&self, c: char) -> Result<(i32, i32)> {
         let item = self.chars.iter().enumerate().find(|(idx, e)| **e == c);
 
