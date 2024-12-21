@@ -63,7 +63,7 @@ pub trait Solution {
     fn part2(&self) -> Result<String>;
 }
 
-#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub struct Direction(i8, i8);
 
 pub const LEFT: Direction = Direction(-1, 0);

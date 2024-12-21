@@ -90,6 +90,10 @@ impl CharGrid {
         }
     }
 
+    pub fn find_one_pos(&self, c: char) -> Result<Position> {
+        self.find_one(c).map(|v| Position::at(v.0, v.1))
+    }
+
     pub fn find_all_pos(&self, c: char) -> Vec<Position> {
         self.chars
             .iter()
