@@ -14,7 +14,7 @@ impl Solution for Day10 {
 }
 
 fn part1(path: &str) -> Result<usize> {
-    let mut cg = CharGrid::from_file(path)?;
+    let cg = CharGrid::from_file(path)?;
 
     let mut sum = 0;
     for trailhead in cg.find_all_pos('0') {
@@ -99,7 +99,7 @@ fn test_rate_trailhead() {
 }
 
 fn part2(path: &str) -> Result<usize> {
-    let mut cg = CharGrid::from_file(path)?;
+    let cg = CharGrid::from_file(path)?;
 
     let mut sum = 0;
     for trailhead in cg.find_all_pos('0') {

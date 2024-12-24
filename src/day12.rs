@@ -164,19 +164,19 @@ fn calc_sides(region: &Region) -> usize {
         1 + gaps
     }
 
-    for (_, mut positions) in group_by_with_no_adjacent_direction(&region, |p| p.y, UP) {
+    for (_, positions) in group_by_with_no_adjacent_direction(&region, |p| p.y, UP) {
         sides += count_unique_horiz_segments(positions);
     }
 
-    for (_, mut positions) in group_by_with_no_adjacent_direction(&region, |p| p.y, DOWN) {
+    for (_, positions) in group_by_with_no_adjacent_direction(&region, |p| p.y, DOWN) {
         sides += count_unique_horiz_segments(positions);
     }
 
-    for (_, mut positions) in group_by_with_no_adjacent_direction(&region, |p| p.x, LEFT) {
+    for (_, positions) in group_by_with_no_adjacent_direction(&region, |p| p.x, LEFT) {
         sides += count_unique_vertical_segments(positions);
     }
 
-    for (_, mut positions) in group_by_with_no_adjacent_direction(&region, |p| p.x, RIGHT) {
+    for (_, positions) in group_by_with_no_adjacent_direction(&region, |p| p.x, RIGHT) {
         sides += count_unique_vertical_segments(positions);
     }
 

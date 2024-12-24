@@ -112,7 +112,7 @@ fn solve(cg: &CharGrid) -> Result<Vec<Path>> {
     let mut completed = 0;
     let mut dismissed = 0;
 
-    while let Some(mut path) = active.pop() {
+    while let Some(path) = active.pop() {
         iters += 1;
 
         if iters % 10_000 == 0 {

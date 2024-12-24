@@ -45,6 +45,10 @@ impl CharGrid {
         Ok(CharGrid { width, chars })
     }
 
+    pub fn fill(&mut self, c: char) {
+        self.chars.fill(c);
+    }
+
     pub fn width(&self) -> i32 {
         self.width
     }
@@ -68,7 +72,8 @@ impl CharGrid {
     pub fn set_pos(&mut self, pos: Position, c: char) {
         debug_assert!(
             self.in_bounds(pos),
-            "set_pos called with out of bounds position"
+            "set_pos called with out of bounds position {}",
+            pos
         );
         self.set(pos.x, pos.y, c)
     }
