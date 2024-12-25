@@ -1,5 +1,8 @@
 mod char_grid;
+mod meta_grid;
+
 pub use char_grid::*;
+pub use meta_grid::*;
 
 use std::fmt::Formatter;
 use std::num::ParseIntError;
@@ -119,6 +122,24 @@ impl Add<Direction> for Position {
 impl Add<Direction> for &Position {
     type Output = Position;
     fn add(self, rhs: Direction) -> Self::Output {
+        *self + rhs
+    }
+}
+
+impl Add<Position> for Position {
+    type Output = Position;
+    fn add(self, rhs: Position) -> Self::Output {
+        Self::Output {
+            x: self.x + rhs.x,
+            y: self.y + rhs.y,
+        }
+    }
+}
+
+impl Add<Position> for &Position {
+    type Output = Position;
+
+    fn add(self, rhs: Position) -> Self::Output {
         *self + rhs
     }
 }

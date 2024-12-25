@@ -15,6 +15,7 @@ mod day17;
 mod day18;
 mod day19;
 mod day2;
+mod day20;
 mod day3;
 mod day4;
 mod day5;
@@ -52,6 +53,7 @@ fn main() -> Result<()> {
     days.insert(17, Box::new(day17::Day17));
     days.insert(18, Box::new(day18::Day18));
     days.insert(19, Box::new(day19::Day19));
+    days.insert(20, Box::new(day20::Day20));
 
     if let Some(solution) = days.get(&day) {
         let result = if part == 1 {
